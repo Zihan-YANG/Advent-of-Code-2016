@@ -1,7 +1,9 @@
 keypad = [
-    [7,8,9],
-    [4,5,6],
-    [1,2,3]
+    [None,None,'D',None,None],
+    [None,'A','B','C',None],
+    ['5','6','7','8','9'],
+    [None,'2','3','4',None],
+    [None,None,'1',None,None]
 ]
 
 coordinate_map = {
@@ -14,7 +16,7 @@ coordinate_map = {
 with open('day_02.txt','r') as file_obj:
     input_text = file_obj.read()
     
-current_position = (1,1)
+current_position = (0,2)
 bathroom_code = ''
 
 for instruction in input_text.splitlines():
@@ -23,10 +25,12 @@ for instruction in input_text.splitlines():
         x_position = current_position[0] + x_adjustment
         y_position = current_position[1] + y_adjustment
         
-        x_position = min(max(x_position,0),2)
-        y_position = min(max(y_position,0),2)
+        x_position = min(max(x_position,0),4)
+        y_position = min(max(y_position,0),4)
         
-        current_position = (x_position,y_position)
-    bathroom_code = bathroom_code + str(keypad[y_position][x_position])
+        if keypad[y_position][x_position] != None:
+            current_position = (x_position,y_position)
+        
+    bathroom_code = bathroom_code + keypad[current_position[1]][current_position[0]]
 
 print(f'bathroom code: {bathroom_code}')
